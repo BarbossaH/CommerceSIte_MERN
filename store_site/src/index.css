@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* font-family: 'Poppins', sans-serif; */
+/* font-family: 'Playfair Display', serif;
+font-family: 'Poppins', sans-serif; */
+.navbar {
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: capitalize;
+  box-shadow: 0px 10px 6px -6px gray;
+  --webkit-box-shadow: 0px 10px 6px -6px gray;
+  border-bottom: 0.5px solid gray !important;
+  background: linear-gradient(to right, #ffff00, #8b4513);
+}
+
+.nav-link {
+  font-weight: 500 !important;
+  color: #ffffff;
+}
+.active {
+  border-bottom: 2px solid bisque;
+  color: #ffffff !important;
+}
+.navbar-brand {
+  display: flex;
+  /* align-items: center; */
+  font-weight: 700;
+  font-family: 'roboto', sans-serif;
+  letter-spacing: 2px;
+}
+
+/* ---------footer--------------------- */
+.footer {
+  height: 12vh;
+  color: white;
+  padding: 15px;
+  background-color: darkslategray;
+  background: -webkit-linear-gradient(to right, #f5f76c, #330033);
+  background: linear-gradient(to right, #f5f76c, #330033);
+}
+.footer h4 {
+  font-size: medium;
+}
+.footer a {
+  text-decoration: none;
+  color: white;
+  padding: 9px;
+}
+
+.footer a:hover {
+  color: khaki;
+  font-weight: 500;
+  border-bottom: 1px solid khaki;
+}
+/* ---------404--------------------- */
+.pnf {
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pnf-title {
+  font-size: 100px;
+  color: orange;
+}
+
+.pnf-heading {
+  color: gold;
+}
+
+.pnf-btn {
+  /* text-decoration: none; */
+  color: green;
+  padding: 10px;
+  font-size: 24px;
+}
+/* ---------about us--------------------- */
+.contactus {
+  border: #ccff00 9px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+  padding: 0;
+  height: 70vh;
+}
+/* --------------register------------------ */
+.register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  flex-direction: column;
+  background-color: #ffdee9;
+  background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+}
+
+.register form {
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px, 5px, 15px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 50vw;
+  border: rgb(60, 47, 60) 2px solid;
+  box-shadow: 0.5px 0.5px 0.5px 2px rgb(49, 54, 43);
+}
+.register h1 {
+  margin-bottom: 35px;
+}
+
+.register form input {
+  border: none;
+  border-bottom: 1px solid #5000fd;
+}
