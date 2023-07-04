@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
 import { Outlet } from 'react-router-dom';
-import Spinner from '../Utils/Spinner';
+import Spinner from '../utils/Spinner';
 
 //using this component as the parent component which need to check the user login or not, and then navigate to the corresponding page.
 // in this component, all need do is check the login status, and based on the status, jump to the page

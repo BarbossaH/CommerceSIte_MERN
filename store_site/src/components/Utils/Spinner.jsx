@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Layout from '../Layout/Layout';
+import Layout from '../layout/Layout';
 import { useNavigate } from 'react-router-dom';
 const Spinner = () => {
   const [count, setCount] = useState(3);

@@ -1,4 +1,4 @@
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/layout/Layout';
 import { BiMailSend, BiPhoneCall, BiSupport } from 'react-icons/bi';
 const ContactPage = () => {
   return (

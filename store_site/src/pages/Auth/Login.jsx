@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Layout from '../../components/Layout/Layout';
+import Layout from '../../components/layout/Layout';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';

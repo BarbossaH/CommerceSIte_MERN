@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/layout/Layout';
 const Page404 = () => {
   return (
     <Layout title={'Back to Homepage'}>

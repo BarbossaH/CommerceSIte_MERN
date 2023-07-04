@@ -4,10 +4,10 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PolicyPage from './pages/PolicyPage';
 import Page404 from './pages/Page404';
-import Register from './pages/Auth/Register';
-import Login from './pages/Auth/Login';
+import Register from './pages/auth/Register';
+import Login from './pages/auth/Login';
 import Dashboard from './pages/user/Dashboard';
-import PrivateAuth from './components/Routes/PrivateAuth';
+import PrivateAuth from './components/priaveRoutes/PrivateAuth';
 function App() {
   return (
     <Routes>

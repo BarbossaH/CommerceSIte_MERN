@@ -1,5 +1,5 @@
-import Layout from '../../components/Layout/Layout';
-import Spinner from '../../components/Utils/Spinner';
+import Layout from '../../components/layout/Layout';
+import Spinner from '../../components/utils/Spinner';
 const Dashboard = () => {
   return (
     // <div>123</div>
