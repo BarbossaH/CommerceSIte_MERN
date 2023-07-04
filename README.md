@@ -4,7 +4,7 @@ This project is for a commerce website, which includes React, bootstrap, axios, 
 ## Frondend
 #### Overview
 1. using vite to create the React project.
-2. using npm run dev to start the front end in the store_site directory, and we also can use npm run dev to start the server and app simultaneously in the back_end dicrectory.
+2. using npm run dev to start the front end in the store_site directory, and we also can use npm run dev to start the server and app simultaneously in the back_end directory.
 3. using router 6 to create the router
 #### The structure of the front end:
 1. the entrance of the project: main.jsx
