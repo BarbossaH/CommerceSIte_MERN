@@ -15,4 +15,8 @@ router.post('/register', registerController);
 router.post('/login', loginController);
 
 router.get('/test', isLogin, isAdmin, testCon);
+
+router.get('/user-auth', isLogin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 export default router;

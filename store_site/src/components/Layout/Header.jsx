@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom';
 import { FaShoppingBag } from 'react-icons/fa';
-import { useAuth } from '../../context/Auth';
+import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();

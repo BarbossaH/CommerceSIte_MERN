@@ -7,11 +7,14 @@ import Page404 from './pages/Page404';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import Dashboard from './pages/user/Dashboard';
+import PrivateAuth from './components/Routes/PrivateAuth';
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<PrivateAuth />}>
+        <Route path="" element={<Dashboard />} />
+      </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<AboutPage />} />

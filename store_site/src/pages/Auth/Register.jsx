@@ -31,6 +31,8 @@ const Register = () => {
         // console.log(res.data);
 
         toast.success(res.data && res.data.message);
+        // toast.dismiss();
+
         navigate('/login');
       } else {
         toast.error(res.data.message);
@@ -39,6 +41,7 @@ const Register = () => {
       console.log(error);
     }
   };
+
   return (
     <Layout title={'Register -- ECommerce App'}>
       <div className="register">

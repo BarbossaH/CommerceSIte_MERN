@@ -3,7 +3,7 @@ import Layout from '../../components/Layout/Layout';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/Auth';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const Login = () => {
   const [auth, setAuth] = useAuth();
 
   const handleSubmit = async (e) => {
+    console.log(123);
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:8080/api/v1/auth/login/', {
@@ -22,12 +23,14 @@ const Login = () => {
 
       if (res?.data.success) {
         toast.success(res?.data.message);
+
         // console.log(res.data);
         // const user = res.data.user;
         // const token = res.data.token;
         // setAuth({ user, token });
         setAuth({ ...auth, user: res.data.user, token: res.data.token });
         localStorage.setItem('auth', JSON.stringify(res.data));
+        toast.dismiss();
         navigate('/');
       } else {
         toast.error(res?.data.message);
