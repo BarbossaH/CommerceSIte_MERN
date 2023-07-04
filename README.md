@@ -19,3 +19,4 @@ This project is for a commerce website, which includes React, bootstrap, axios, 
 3. they layout of the project: layout.jsx, including the header, footer, and the main content.every page will be rendered in the main content.
 4. the auth data is loaded in the context,and it's called int the main.jsx, which means it will load the auth data before the main content is rendered.
 5. the pages directory is for the entrance of each page;
+6. the components directory is for the components which will be used in the pages, such as layout, privateRoutes, utils, and so on.

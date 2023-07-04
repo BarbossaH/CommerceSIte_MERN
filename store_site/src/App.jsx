@@ -7,7 +7,7 @@ import Page404 from './pages/Page404';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import Dashboard from './pages/user/Dashboard';
-import PrivateAuth from './components/priaveRoutes/PrivateAuth';
+import PrivateAuth from './components/privateRoutes/PrivateAuth';
 function App() {
   return (
     <Routes>
