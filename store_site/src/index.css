@@ -109,9 +109,9 @@ font-family: 'Poppins', sans-serif; */
   align-items: center;
   justify-content: center;
   padding: 20px;
-  width: 50vw;
-  border: rgb(60, 47, 60) 2px solid;
-  box-shadow: 0.5px 0.5px 0.5px 2px rgb(49, 54, 43);
+  width: 400px;
+  border: rgb(192, 45, 192) 2px solid;
+  box-shadow: 0.5px 0.5px 0.5px 2px rgb(211, 237, 12);
 }
 .register h1 {
   margin-bottom: 35px;
@@ -120,4 +120,8 @@ font-family: 'Poppins', sans-serif; */
 .register form input {
   border: none;
   border-bottom: 1px solid #5000fd;
+}
+.forgetpwd a {
+  color: #330033;
+  font-size: 12px;
 }

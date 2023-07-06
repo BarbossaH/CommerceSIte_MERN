@@ -4,13 +4,10 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const ResetPwd = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [newPwd, setNewPwd] = useState('');
   const [answer, setAnswer] = useState('');
 
   const handleSubmit = async (e) => {
@@ -18,14 +15,11 @@ const Register = () => {
     // "proxy": "http://localhost:8080",
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/v1/auth/register/`,
+        `http://localhost:8080/api/v1/auth/forget-password/`,
         {
-          name,
           email,
-          password,
-          phone,
+          password: newPwd,
           answer,
-          address,
         }
       );
 
@@ -47,35 +41,8 @@ const Register = () => {
   return (
     <Layout title={'Register -- ECommerce App'}>
       <div className="register">
-        <h1>Register</h1>
+        <h1>Reset Password</h1>
         <form className="row g-3" onSubmit={handleSubmit}>
-          <div className="col-md-6">
-            <label htmlFor="inputName" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="form-control"
-              id="inputName"
-              placeholder="Enter your name"
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="inputPassword4" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="inputPassword4"
-              required
-            />
-          </div>
           <div className="col-12">
             <label htmlFor="inputEmail" className="form-label">
               Email
@@ -90,23 +57,23 @@ const Register = () => {
               required
             />
           </div>
-          <div className="col-12">
-            <label htmlFor="inputPhone" className="form-label">
-              Phone
+          <div className="col-md-12">
+            <label htmlFor="inputPassword4" className="form-label">
+              New Password
             </label>
             <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              type="password"
+              value={newPwd}
+              onChange={(e) => setNewPwd(e.target.value)}
               className="form-control"
-              id="inputPhone"
-              placeholder="Enter your phone"
+              id="inputPassword4"
               required
             />
           </div>
+
           <div className="col-12">
             <label htmlFor="inputPhone" className="form-label">
-              Write your favorite thing.
+              Write your favorite thing
             </label>
             <input
               type="text"
@@ -118,23 +85,10 @@ const Register = () => {
               required
             />
           </div>
-          <div className="col-12">
-            <label htmlFor="inputAddress" className="form-label">
-              Address
-            </label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="form-control"
-              id="inputAddress"
-              placeholder="Enter your address"
-              required
-            />
-          </div>
-          <div className="col-12">
+
+          <div className="col-12 d-flex justify-content-center">
             <button type="submit" className="btn btn-primary">
-              Sign Up
+              Reset Password
             </button>
           </div>
         </form>
@@ -142,4 +96,4 @@ const Register = () => {
     </Layout>
   );
 };
-export default Register;
+export default ResetPwd;

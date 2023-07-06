@@ -2,11 +2,12 @@ import { useState } from 'react';
 import Layout from '../../components/layout/Layout';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,7 +32,8 @@ const Login = () => {
         setAuth({ ...auth, user: res.data.user, token: res.data.token });
         localStorage.setItem('auth', JSON.stringify(res.data));
         toast.dismiss();
-        navigate('/');
+        // to navigate to the previous page not previously authorized.
+        navigate(location.state || '/');
       } else {
         toast.error(res?.data.message);
       }
@@ -71,10 +73,19 @@ const Login = () => {
               required
             />
           </div>
-          <div className="col-12">
-            <button type="submit" className="btn btn-primary">
-              Login
-            </button>
+          <div className="col-12 d-flex flex-column align-items-center">
+            <div className="mb-2">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ padding: '1px 30px', fontSize: '24px' }}
+              >
+                Login
+              </button>
+            </div>
+            <div className="forgetpwd">
+              <NavLink to="/forget-password">Forget Password</NavLink>
+            </div>
           </div>
         </form>
       </div>

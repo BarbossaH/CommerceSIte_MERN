@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  // console.log(auth);
   const handleLogout = () => {
     localStorage.removeItem('auth');
     setAuth({ ...auth, user: null, token: null });
@@ -54,14 +55,49 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <li className="nav-item">
+                  <li className="nav-item dropdown">
                     <NavLink
-                      to={'/login'}
-                      className="nav-link"
-                      onClick={handleLogout}
+                      className="nav-link dropdown-toggle"
+                      id="navbarDropdown"
+                      // onClick={handleLogout}
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                      Logout
+                      {auth.user?.name}
                     </NavLink>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdown"
+                    >
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={`/dashboard/${
+                            auth?.user?.role === 1 ? 'admin' : 'user'
+                          }`}
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={'/login'}
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </Link>
+                      </li>
+                      <li>
+                        <hr className="dropdown-divider" />
+                      </li>
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          Something else here
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                 </>
               )}
@@ -69,38 +105,6 @@ const Header = () => {
                 <NavLink to={'/cart'} className="nav-link">
                   Cart(0)
                 </NavLink>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                {/* <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul> */}
               </li>
             </ul>
           </div>

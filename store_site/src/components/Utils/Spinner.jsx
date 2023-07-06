@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import Layout from '../layout/Layout';
-import { useNavigate } from 'react-router-dom';
-const Spinner = () => {
-  const [count, setCount] = useState(3);
-  const nav = useNavigate();
-
+import { useLocation, useNavigate } from 'react-router-dom';
+const Spinner = ({ path = 'login' }) => {
+  const [count, setCount] = useState(2);
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     const interval = setInterval(() => {
       setCount((prev) => --prev);
     }, 1000);
-    count === 0 && nav('/login');
+    count === 0 && navigate(`/${path}`, { state: location.pathname });
     return () => clearInterval(interval);
-  }, [count, nav]);
+  }, [count, navigate, location, path]);
   return (
     <Layout>
       <div

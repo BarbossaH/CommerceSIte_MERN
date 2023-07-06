@@ -2,6 +2,7 @@ import express from 'express';
 import {
   registerController,
   loginController,
+  forgetPwdController,
   testCon,
 } from '../controller/authController.js';
 
@@ -14,9 +15,18 @@ router.post('/register', registerController);
 //login
 router.post('/login', loginController);
 
+//forget password
+router.post('/forget-password', forgetPwdController);
+
 router.get('/test', isLogin, isAdmin, testCon);
 
+// is user login
 router.get('/user-auth', isLogin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
+// is admin login
+router.get('/admin-auth', isLogin, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 export default router;

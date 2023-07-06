@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-export const hashPwd = async (pwd) => {
+export const handleHashPwd = async (pwd) => {
   try {
     const hashedPwd = await bcrypt.hash(pwd, 10);
     return hashedPwd;

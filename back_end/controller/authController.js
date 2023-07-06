@@ -1,15 +1,14 @@
 import userModel from '../models/userModel.js';
-import { hashPwd, comparePwd } from '../utils/authHelper.js';
+import { handleHashPwd, comparePwd } from '../utils/authHelper.js';
 import JWT from 'jsonwebtoken';
 
 // post register
 export const registerController = async (req, res) => {
-  console.log('1233123');
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, answer, address } = req.body;
 
     //validations
-    if (!name || !email || !password || !phone || !address) {
+    if (!name || !email || !password || !phone || !address || !answer) {
       return res.send({ message: 'Every field is required.' });
     }
 
@@ -21,7 +20,7 @@ export const registerController = async (req, res) => {
       });
     }
 
-    const hashedPwd = await hashPwd(password);
+    const hashedPwd = await handleHashPwd(password);
     //save
 
     const user = await new userModel({
@@ -29,6 +28,7 @@ export const registerController = async (req, res) => {
       email,
       phone,
       address,
+      answer,
       password: hashedPwd,
     }).save();
 
@@ -85,6 +85,7 @@ export const loginController = async (req, res) => {
         email: user.email,
         phone: user.phone,
         address: user.address,
+        role: user.role,
       },
       token,
     });
@@ -98,6 +99,41 @@ export const loginController = async (req, res) => {
   }
 };
 
+export const forgetPwdController = async (req, res) => {
+  try {
+    //check the body of request
+    const { email, answer, password } = req.body;
+    if (!email || !answer || !password) {
+      res.status(400).send({
+        success: false,
+        message: 'email,answer, and new password are all required.',
+      });
+    }
+    //check the data exists or not in db
+    const user = await userModel.findOne({ email, answer });
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: 'Email or answer are incorrect.',
+      });
+    }
+
+    const hashedPwd = await handleHashPwd(password);
+
+    await userModel.findByIdAndUpdate(user._id, { password: hashedPwd });
+    res.status(200).send({
+      success: true,
+      message: 'Password has reset.',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: 'Request is invalid.',
+      error,
+    });
+  }
+};
 export const testCon = async (req, res) => {
   res.send('Test');
 };
