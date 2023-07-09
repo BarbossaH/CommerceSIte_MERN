@@ -2,6 +2,7 @@ import JWT from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
 
 export const isLogin = async (req, res, next) => {
+  console.log('is Login');
   try {
     const decode = JWT.verify(req.headers.authorization, process.env.JWT_TOKEN);
     req.user = decode;
