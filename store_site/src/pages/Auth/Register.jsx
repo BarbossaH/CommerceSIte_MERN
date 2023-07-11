@@ -17,17 +17,14 @@ const Register = () => {
     e.preventDefault();
     // "proxy": "http://localhost:8080",
     try {
-      const res = await axios.post(
-        `http://localhost:8080/api/v1/auth/register/`,
-        {
-          name,
-          email,
-          password,
-          phone,
-          answer,
-          address,
-        }
-      );
+      const res = await axios.post(`http://localhost:8080/api/auth/register/`, {
+        name,
+        email,
+        password,
+        phone,
+        answer,
+        address,
+      });
 
       if (res && res.data.success) {
         // console.log(res.data);

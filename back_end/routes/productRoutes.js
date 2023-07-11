@@ -7,6 +7,7 @@ import {
   getAllProductsController,
   getOneProductController,
   updateProductController,
+  getProductPhotoController,
 } from '../controller/productController.js';
 
 const router = express.Router();
@@ -18,9 +19,16 @@ router.post(
   formidable(),
   createProductController
 );
-router.put('/update-product/:id', isLogin, isAdmin, updateProductController);
+router.put(
+  '/update-product/:id',
+  isLogin,
+  isAdmin,
+  formidable(),
+  updateProductController
+);
 router.delete('/delete-product/:id', isLogin, isAdmin, deleteProductController);
-router.get('/get-product/:id', isLogin, isAdmin, getOneProductController);
+router.get('/get-product/:slug', isLogin, isAdmin, getOneProductController);
 router.get('/get-all-products', isLogin, isAdmin, getAllProductsController);
+router.get('/product-photo/:id', isLogin, isAdmin, getProductPhotoController);
 
 export default router;

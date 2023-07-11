@@ -17,21 +17,19 @@ const Login = () => {
     console.log(123);
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8080/api/v1/auth/login/', {
+      const res = await axios.post('http://localhost:8080/api/auth/login/', {
         email,
         password,
       });
 
       if (res?.data.success) {
         toast.success(res?.data.message);
-
         // console.log(res.data);
         // const user = res.data.user;
         // const token = res.data.token;
         // setAuth({ user, token });
         setAuth({ ...auth, user: res.data.user, token: res.data.token });
         localStorage.setItem('auth', JSON.stringify(res.data));
-        toast.dismiss();
         // to navigate to the previous page not previously authorized.
         navigate(location.state || '/');
       } else {

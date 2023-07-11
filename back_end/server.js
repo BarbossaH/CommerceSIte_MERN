@@ -19,6 +19,7 @@ const app = express();
 //middleware
 app.use(cors());
 app.use(express.json());
+//a kind of log middleware
 app.use(morgan('dev'));
 
 //routes

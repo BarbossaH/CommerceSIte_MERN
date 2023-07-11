@@ -15,7 +15,7 @@ const ResetPwd = () => {
     // "proxy": "http://localhost:8080",
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/v1/auth/forget-password/`,
+        `http://localhost:8080/api/auth/forget-password/`,
         {
           email,
           password: newPwd,

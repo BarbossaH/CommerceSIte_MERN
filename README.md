@@ -22,3 +22,10 @@ This project is for a commerce website, which includes React, bootstrap, axios, 
 4. the auth data is loaded in the context,and it's called int the main.jsx, which means it will load the auth data before the main content is rendered.
 5. the pages directory is for the entrance of each page;
 6. the components directory is for the components which will be used in the pages, such as layout, privateRoutes, utils, and so on.
+
+##### The structure of the backend:
+
+1. the server engine: expressjs and nodejs;
+2. the database: MongoDB;
+3. the entrance of the project: server.js;
+4. the third party middleware: cors, dotenv, slugify,express-validator(parsing the incoming form and files), jsonwebtoken,and so on;
