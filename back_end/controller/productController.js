@@ -1,7 +1,6 @@
 import slugify from 'slugify';
 import productModel from '../models/productModel.js';
 import fs from 'fs';
-import { ok } from 'assert';
 export const createProductController = async (req, res) => {
   try {
     // const { name, description, price, category, quantity, shipping } =
@@ -75,7 +74,7 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: 'Category is required.' });
       case !quantity:
         return res.status(500).send({ error: 'Quantity is required.' });
-      case photo?.size > 10000000:
+      case photo?.size > 1000000:
         return res
           .status(500)
           .send({ error: 'Phone is required and should be less than 1M.' });

@@ -12,7 +12,7 @@ const AdminAuth = () => {
     const authCheck = async () => {
       const res = await axios.get('http://localhost:8080/api/auth/admin-auth/');
       if (res.data.ok) {
-        console.log(res.data);
+        // console.log(res.data);
         setOk(true);
       } else {
         console.log(res.data);

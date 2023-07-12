@@ -1,7 +1,7 @@
 import Footer from './Footer';
 import Header from './Header';
 import { Helmet } from 'react-helmet';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, ToastBar } from 'react-hot-toast';
 
 const Layout = ({ children, description, keywords, author, title }) => {
   return (
@@ -16,8 +16,20 @@ const Layout = ({ children, description, keywords, author, title }) => {
 
       <Header />
       <main style={{ minHeight: '80vh' }}>
-        {/* <Toaster position="top-right" delay={500} duration={5000} /> */}
         {children}
+        <Toaster>
+          {(t) => (
+            <ToastBar
+              toast={t}
+              style={{
+                ...t.style,
+                animation: t.visible
+                  ? 'custom-enter 1s ease'
+                  : 'custom-exit 1s ease',
+              }}
+            />
+          )}
+        </Toaster>
       </main>
       <Footer />
     </>
