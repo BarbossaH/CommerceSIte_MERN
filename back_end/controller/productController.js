@@ -4,7 +4,8 @@ import fs from 'fs';
 export const createProductController = async (req, res) => {
   try {
     // const { name, description, price, category, quantity, shipping } =
-    const { name, description, price, category, quantity } = req.fields;
+    const { name, description, price, category, quantity, shipping } =
+      req.fields;
     const { photo } = req.files;
     //check the fields
     switch (true) {
@@ -18,6 +19,8 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: 'Category is required.' });
       case !quantity:
         return res.status(500).send({ error: 'Quantity is required.' });
+      case !shipping:
+        return res.status(500).send({ error: 'Shipping is required.' });
       case !photo || photo?.size > 10000000:
         return res
           .status(500)
@@ -120,7 +123,7 @@ export const deleteProductController = async (req, res) => {
       return res
         .status(200)
         .send({ success: true, message: 'Product id is required' });
-    await productModel.findByIdAndDelete(id).select('-photo');
+    await productModel.findByIdAndDelete(_id).select('-photo');
     return res.status(200).send({
       success: true,
       message: 'Product deleted.',
@@ -194,6 +197,7 @@ export const getOneProductController = async (req, res) => {
 export const getProductPhotoController = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id, 9999999999);
     if (!id) {
       res.status(200).send({
         success: true,

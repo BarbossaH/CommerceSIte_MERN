@@ -6,7 +6,7 @@ import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
 import { Modal } from 'antd';
 const CreateCategory = () => {
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [name, setName] = useState('');
   const [updateName, setUpdateName] = useState('');
   const [productId, setProductId] = useState(null);
@@ -15,16 +15,14 @@ const CreateCategory = () => {
 
   const getAllCategories = async () => {
     try {
-      console.log('preparing1');
+      // console.log('preparing1');
       const { data } = await axios.get(
         'http://127.0.0.1:8080/api/category/get-all-category'
       );
 
       if (data.success) {
-        console.log('preparing');
-
-        setCategory(data.categories);
-        console.log('refresh');
+        setCategories(data.categories);
+        // console.log('refresh');
       }
     } catch (error) {
       console.log(error);
@@ -41,6 +39,7 @@ const CreateCategory = () => {
         { name }
       );
       if (data?.success) {
+        // console.log(123333);
         getAllCategories();
         setName('');
         // console.log(data);
@@ -116,7 +115,7 @@ const CreateCategory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {category.map((c, index) => (
+                  {categories?.map((c, index) => (
                     <tr key={c._id}>
                       <th scope="row">{index + 1}</th>
                       <td>{c.name}</td>

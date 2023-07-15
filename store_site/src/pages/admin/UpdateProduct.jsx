@@ -4,10 +4,12 @@ import Layout from '../../components/layout/Layout';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Select } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const { Option } = Select;
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
+  const { slug } = useParams();
+  // console.log(slug, 9999);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [categoryID, setCategoryID] = useState(null);
@@ -17,6 +19,7 @@ const CreateProduct = () => {
   const [photo, setPhoto] = useState('');
   const [quantity, setQuantity] = useState('');
   const [shipping, setShipping] = useState('');
+  const [productID, setProductID] = useState('');
 
   const getAllCategories = async () => {
     try {
@@ -35,10 +38,30 @@ const CreateProduct = () => {
     }
   };
   useEffect(() => {
+    getSingleProduct();
     getAllCategories();
   }, []);
 
-  const handleCreateProduct = async () => {
+  const getSingleProduct = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://127.0.0.1:8080/api/product//get-product/${slug}`
+      );
+      if (data.success) {
+        setName(data.product.name);
+        console.log(data.product, 90909090);
+        setCategoryID(data.product.category._id);
+        setProductID(data.product._id);
+        setPrice(data.product.price);
+        setDescription(data.product.description);
+        setQuantity(data.product.quantity);
+        setShipping(data.product.shipping);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdateProduct = async () => {
     // e.preventDefault();
     try {
       const product = new FormData();
@@ -46,19 +69,18 @@ const CreateProduct = () => {
       product.append('description', description);
       product.append('price', price);
       product.append('quantity', quantity);
-      product.append('photo', photo);
-      product.append('shipping', shipping);
-      // console.log(category, 'tetetetee');
+      photo && product.append('photo', photo);
+      // console.log(categories, categoryID);
       product.append('category', categoryID);
-      // product.append('shipping', shipping);
+      product.append('shipping', shipping);
 
-      const { data } = await axios.post(
-        'http://127.0.0.1:8080/api/product/create-product',
+      const { data } = await axios.put(
+        `http://127.0.0.1:8080/api/product/update-product/${productID}`,
         product
       );
       if (data.success) {
-        toast.success(`${name} created successfully`);
-        navigate('/');
+        toast.success(`${name} updated successfully`);
+        navigate('/dashboard/admin/get-products');
       } else {
         toast.error(data.message);
       }
@@ -68,14 +90,14 @@ const CreateProduct = () => {
     }
   };
   return (
-    <Layout title={'Product-Admin-Dashboard'}>
+    <Layout title={'Update-Admin-Dashboard'}>
       <div className="container-fluid m-3 p-3">
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
           </div>
           <div className="col-md-9">
-            <h1>Create Product</h1>
+            <h1>Update Product</h1>
             <div className="m-1">
               <Select
                 bordered={false}
@@ -83,7 +105,11 @@ const CreateProduct = () => {
                 size="large"
                 showSearch
                 className="form-select mb-3"
-                onChange={(value) => setCategoryID(value)}
+                value={categoryID}
+                onChange={(value) => {
+                  // console.log(value, '0000000');
+                  setCategoryID(value);
+                }}
               >
                 {/* {console.log(categories)} */}
                 {categories?.map((c) => (
@@ -97,7 +123,7 @@ const CreateProduct = () => {
                   // htmlFor="upload images"
                   className="btn btn-outline-secondary col-md-12"
                 >
-                  {photo ? photo.name : 'Upload a photo'}
+                  {photo ? photo?.name : 'Upload a photo'}
                   <input
                     type="file"
                     name="photo"
@@ -108,7 +134,7 @@ const CreateProduct = () => {
                 </label>
               </div>
               <div className="mb-3" style={{ border: '1px solid green' }}>
-                {photo && (
+                {photo ? (
                   <div className="text-center">
                     <img
                       src={URL.createObjectURL(photo)}
@@ -117,6 +143,18 @@ const CreateProduct = () => {
                       className="img img-responsive"
                     />
                   </div>
+                ) : productID ? (
+                  <div className="text-center">
+                    {/* {console.log(productID, 9090909091)} */}
+                    <img
+                      src={`http://127.0.0.1:8080/api/product/product-photo/${productID}`}
+                      className="img img-responsive"
+                      height={'200px'}
+                      alt={name}
+                    />
+                  </div>
+                ) : (
+                  <></>
                 )}
               </div>
               <div className="mb-3 row">
@@ -176,10 +214,13 @@ const CreateProduct = () => {
                     size="small"
                     showSearch
                     className="form-select mb-3"
-                    onChange={(value) => setShipping(value)}
+                    onChange={(value) => {
+                      setShipping(value);
+                    }}
+                    value={shipping}
                   >
-                    <Option value="0">No</Option>
-                    <Option value="1">Yes</Option>
+                    <Option value={false}>No</Option>
+                    <Option value={true}>Yes</Option>
                   </Select>
                 </div>
               </div>
@@ -187,9 +228,9 @@ const CreateProduct = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={handleCreateProduct}
+                  onClick={handleUpdateProduct}
                 >
-                  Add Product
+                  Update Product
                 </button>
               </div>
             </div>
@@ -199,4 +240,4 @@ const CreateProduct = () => {
     </Layout>
   );
 };
-export default CreateProduct;
+export default UpdateProduct;

@@ -34,3 +34,7 @@ This project is for a commerce website, which includes React, bootstrap, axios, 
 5. the third party middleware: cors, dotenv, slugify,express-formidable (parsing the incoming form and files), jsonwebtoken,and so on;
    1. express-formidable， when uploading such images, big form data files,this plugin will be used to parse the files and form data, and store the files in a temporary directory.There is a path stored in the data, and we can use the path to get the image and then using fs to read the files and save them in the database.
    2. it is a common approach to separate the retrieval of big files from the retrieval of additional information about those files in web server design.
+
+#### issues:
+
+1. when deleting the last one category or add the first category,the page won't be refreshed immediately,it will refresh after a while or we refresh the page manually.
