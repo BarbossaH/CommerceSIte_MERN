@@ -28,7 +28,7 @@ router.put(
 );
 router.delete('/delete-product/:id', isLogin, isAdmin, deleteProductController);
 router.get('/get-product/:slug', isLogin, isAdmin, getOneProductController);
-router.get('/get-all-products', isLogin, isAdmin, getAllProductsController);
+router.get('/get-all-products', getAllProductsController);
 router.get('/product-photo/:id', getProductPhotoController);
 
 export default router;

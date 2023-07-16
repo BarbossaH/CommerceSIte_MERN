@@ -22,11 +22,12 @@ const Login = () => {
       });
 
       if (res?.data.success) {
-        toast.success(res?.data.message);
         // console.log(res.data);
         // const user = res.data.user;
         // const token = res.data.token;
         // setAuth({ user, token });
+        toast.success(res?.data.message);
+
         setAuth({ ...auth, user: res.data.user, token: res.data.token });
         localStorage.setItem('auth', JSON.stringify(res.data));
         // to navigate to the previous page not previously authorized.

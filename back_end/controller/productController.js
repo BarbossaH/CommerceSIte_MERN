@@ -201,7 +201,7 @@ export const getOneProductController = async (req, res) => {
 export const getProductPhotoController = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id, 9999999999);
+    // console.log(id, 9999999999);
     if (!id) {
       res.status(200).send({
         success: true,

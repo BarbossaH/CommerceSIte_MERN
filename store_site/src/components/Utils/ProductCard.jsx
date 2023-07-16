@@ -1,5 +1,4 @@
 const ProductCard = ({ product }) => {
-  // console.log(product, 12323213213);
   return (
     <div className="card m-2" style={{ width: '12rem' }}>
       <img
