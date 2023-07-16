@@ -29,7 +29,7 @@ const Products = () => {
 
   useEffect(() => {
     getAllProducts();
-  }, [products]);
+  }, []);
   return (
     <Layout title={'Products-Admin-Dashboard'}>
       <div className="container-fluid m-3 p-3">

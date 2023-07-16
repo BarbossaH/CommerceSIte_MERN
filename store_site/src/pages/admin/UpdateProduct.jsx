@@ -89,6 +89,21 @@ const UpdateProduct = () => {
       // toast.error(error);
     }
   };
+
+  const handleDeleteProduct = async () => {
+    try {
+      const { data } = await axios.delete(
+        `http://127.0.0.1:8080/api/product/delete-product/${productID}`
+      );
+      if (data.success) {
+        toast.success(data.message);
+        navigate('/dashboard/admin/get-products');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout title={'Update-Admin-Dashboard'}>
       <div className="container-fluid m-3 p-3">
@@ -224,13 +239,20 @@ const UpdateProduct = () => {
                   </Select>
                 </div>
               </div>
-              <div className="mb-3 text-center">
+              <div className="mb-3 d-flex justify-content-evenly ">
                 <button
                   type="button"
                   className="btn btn-primary"
                   onClick={handleUpdateProduct}
                 >
                   Update Product
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleDeleteProduct}
+                >
+                  Delete Product
                 </button>
               </div>
             </div>

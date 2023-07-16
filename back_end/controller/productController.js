@@ -117,13 +117,17 @@ export const updateProductController = async (req, res) => {
 };
 
 export const deleteProductController = async (req, res) => {
+  // const { id } = req.params;
+
+  // console.log(id, 'this is id');
+  // return res.status(200).send({ message: id });
   try {
     const { id } = req.params;
     if (!id)
       return res
         .status(200)
         .send({ success: true, message: 'Product id is required' });
-    await productModel.findByIdAndDelete(_id).select('-photo');
+    await productModel.findByIdAndDelete(id).select('-photo');
     return res.status(200).send({
       success: true,
       message: 'Product deleted.',
