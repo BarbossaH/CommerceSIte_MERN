@@ -18,6 +18,8 @@ const CreateProduct = () => {
   const [quantity, setQuantity] = useState('');
   const [shipping, setShipping] = useState('');
 
+  const canCreate =
+    categoryID && name && description && price && photo && quantity && shipping;
   const getAllCategories = async () => {
     try {
       // console.log('preparing1');
@@ -188,6 +190,7 @@ const CreateProduct = () => {
                   type="button"
                   className="btn btn-primary"
                   onClick={handleCreateProduct}
+                  disabled={!canCreate}
                 >
                   Add Product
                 </button>

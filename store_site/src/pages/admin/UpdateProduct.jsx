@@ -92,6 +92,8 @@ const UpdateProduct = () => {
 
   const handleDeleteProduct = async () => {
     try {
+      let confirm = window.prompt(`Input ${name} to delete ?`);
+      if (confirm !== name) return;
       const { data } = await axios.delete(
         `http://127.0.0.1:8080/api/product/delete-product/${productID}`
       );
