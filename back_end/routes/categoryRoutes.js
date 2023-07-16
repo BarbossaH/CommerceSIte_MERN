@@ -18,7 +18,7 @@ router.delete(
   deleteCategoryController
 );
 router.put('/update-category/:id', isLogin, isAdmin, updateCategoryController);
-router.get('/get-all-category', isLogin, isAdmin, getAllCategoryController);
+router.get('/get-all-category', getAllCategoryController);
 router.get(
   '/get-one-category/:slug',
   isLogin,

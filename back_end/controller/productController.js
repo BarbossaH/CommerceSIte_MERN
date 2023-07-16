@@ -233,3 +233,25 @@ export const getProductPhotoController = async (req, res) => {
     });
   }
 };
+
+export const productFilterController = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    let filters = {};
+    if (checked.length > 0) filters.category = checked;
+    if (radio.length > 0) filters.price = { $gt: radio[0], $lte: radio[1] }; // >radio[0] and <=radio[1]
+    const products = await productModel.find(filters);
+    res.status(200).send({
+      success: true,
+      message: 'filtering successful',
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: 'Filtering products went wrong.',
+      error,
+    });
+  }
+};
