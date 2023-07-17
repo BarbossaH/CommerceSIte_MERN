@@ -238,13 +238,28 @@ export const productFilterController = async (req, res) => {
   try {
     const { checked, radio } = req.body;
     let filters = {};
-    if (checked.length > 0) filters.category = checked;
-    if (radio.length > 0) filters.price = { $gt: radio[0], $lte: radio[1] }; // >radio[0] and <=radio[1]
-    const products = await productModel.find(filters);
+    const eachCount = 3;
+    const page = req.params.page ? req.params.page : 1;
+
+    if (checked?.length > 0) filters.category = checked;
+    if (radio?.length > 0) filters.price = { $gt: radio[0], $lte: radio[1] }; // >radio[0] and <=radio[1]
+
+    const total = await productModel.countDocuments(filters);
+    // const total = (await productModel.find(filters)).length;
+    console.log(total, 99999999);
+    const products = await productModel
+      .find(filters)
+      .select('-photo')
+      .skip((page - 1) * eachCount)
+      .limit(eachCount)
+      .sort({ createdAt: -1 });
+    // console.log(filters, '1232321');
+
     res.status(200).send({
       success: true,
       message: 'filtering successful',
       products,
+      total,
     });
   } catch (error) {
     console.log(error);
@@ -255,3 +270,51 @@ export const productFilterController = async (req, res) => {
     });
   }
 };
+
+// export const getTotalCountController = async (req, res) => {
+//   try {
+//     const { checked, radio } = req.body;
+//     let filters = {};
+
+//     if (checked?.length > 0) filters.category = checked;
+//     if (radio?.length > 0) filters.price = { $gt: radio[0], $lte: radio[1] };
+//     const total = await productModel.find(filters).estimatedDocumentCount();
+//     return res.status(200).send({
+//       success: true,
+//       total,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       message: 'Getting total went wrong',
+//       success: false,
+//       error,
+//     });
+//   }
+// };
+
+// export const getPageProductController = async (req, res) => {
+//   try {
+//     const eachCount = 3;
+//     const page = req.params.page ? req.params.page : 1;
+//     console.log(page, 1111111);
+//     const products = await productModel
+//       .find({})
+//       .select('-photo')
+//       .skip((page - 1) * eachCount)
+//       .limit(eachCount)
+//       .sort({ createdAt: -1 });
+//     return res.status(200).send({
+//       success: true,
+//       message: `${page} products get.`,
+//       products,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       message: 'Getting products on pages went wrong',
+//       error,
+//       success: false,
+//     });
+//   }
+// };

@@ -14,6 +14,21 @@ const HomePage = () => {
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
 
+  const [totalCount, setTotalCount] = useState();
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  // const getTotalCount = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       'http://127.0.0.1:8080/api/product/get-products-total'
+  //     );
+  //     setTotalCount(data?.total);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const getAllCategories = async () => {
     try {
       // console.log('preparing1');
@@ -32,48 +47,54 @@ const HomePage = () => {
   };
   useEffect(() => {
     getAllCategories();
+    // getTotalCount();
   }, []);
-  const getAllProducts = async () => {
-    // the photo images are retrieved individually from database
-    try {
-      const { data } = await axios.get(
-        'http://127.0.0.1:8080/api/product/get-all-products'
-      );
-      if (data.success) {
-        setProducts(data.products);
-        console.log(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('Getting products went wrong');
-    }
-  };
+  // const getAllProducts = async () => {
+  //   // the photo images are retrieved individually from database
+  //   try {
+  //     setLoading(true);
+  //     const { data } = await axios.get(
+  //       'http://127.0.0.1:8080/api/product/get-all-products'
+  //     );
+  //     setLoading(false);
+  //     if (data.success) {
+  //       setProducts(data.products);
+  //       console.log(data.message);
+  //     } else {
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+
+  //     toast.error('Getting products went wrong');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   //if getting products need authorization, even though the local storage has the token, the header including authorization has to be set up because the context provider is not ready yet, which needs sometimes.
+  //   if (!checked.length > 0 && !radio.length > 0) {
+  //     getAllProducts();
+  //     console.log('11111');
+  //   }
+  // }, [checked.length, radio.length]);
 
   useEffect(() => {
-    //if getting products need authorization, even though the local storage has the token, the header including authorization has to be set up because the context provider is not ready yet, which needs sometimes.
-    if (!checked.length > 0 && !radio.length > 0) {
-      getAllProducts();
-      console.log('11111');
-    }
-  }, [checked.length, radio.length]);
+    filterProducts();
+  }, [checked, radio, page]);
 
-  useEffect(() => {
-    if (checked.length > 0 || radio.length > 0) {
-      console.log('2222');
-
-      filterProducts();
-    }
-  }, [checked, radio]);
   const filterProducts = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.post(
-        'http://127.0.0.1:8080/api/product/product-filters',
+        `http://127.0.0.1:8080/api/product/product-filters/${page}`,
         { checked, radio }
       );
       console.log(data.products);
-      setProducts(data.products);
+      console.log(data.total);
+      setLoading(false);
+      setTotalCount(data.total);
+      setProducts([...products, ...data.products]);
     } catch (error) {
       console.log(error);
     }
@@ -86,8 +107,12 @@ const HomePage = () => {
     } else {
       all = all.filter((id) => id !== _id);
     }
+    setProducts([]);
+    setPage(1);
+
     setChecked(all);
   };
+
   return (
     <Layout title={'Home Page'}>
       <div className="row " style={{ marginTop: '30px' }}>
@@ -114,10 +139,15 @@ const HomePage = () => {
             <div className="d-flex flex-column p-3">
               <Radio.Group
                 className="d-flex flex-column"
-                onChange={(e) => setRadio(e.target.value)}
+                onChange={(e) => {
+                  setProducts([]);
+                  setPage(1);
+
+                  setRadio(e.target.value);
+                }}
               >
                 {Price?.map((p) => (
-                  <Radio key={p._id} value={p.range}>
+                  <Radio key={p.name} value={p.range}>
                     {p.name}
                   </Radio>
                 ))}
@@ -132,6 +162,19 @@ const HomePage = () => {
             {products?.map((p) => (
               <ProductCard key={p._id} product={p} needBtn={true} />
             ))}
+          </div>
+          <div className="m-2 p-3">
+            {products && products.length < totalCount && (
+              <button
+                className="btn btn-warning"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(page + 1);
+                }}
+              >
+                {loading ? 'Loading' : 'Load More'}
+              </button>
+            )}
           </div>
         </div>
       </div>

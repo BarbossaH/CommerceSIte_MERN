@@ -9,6 +9,7 @@ import {
   updateProductController,
   getProductPhotoController,
   productFilterController,
+  // getTotalCountController,
 } from '../controller/productController.js';
 
 const router = express.Router();
@@ -32,6 +33,8 @@ router.get('/get-product/:slug', isLogin, isAdmin, getOneProductController);
 router.get('/get-all-products', getAllProductsController);
 router.get('/product-photo/:id', getProductPhotoController);
 
-router.post('/product-filters', productFilterController);
+router.post('/product-filters/:page', productFilterController);
+// router.get('/get-products-total', getTotalCountController);
+// router.get('/get-page-products/:page', getPageProductController);
 
 export default router;
