@@ -9,7 +9,8 @@ import {
   updateProductController,
   getProductPhotoController,
   productFilterController,
-  // getTotalCountController,
+  searchProductsController,
+  getSimilarProductsController,
 } from '../controller/productController.js';
 
 const router = express.Router();
@@ -29,11 +30,14 @@ router.put(
   updateProductController
 );
 router.delete('/delete-product/:id', isLogin, isAdmin, deleteProductController);
-router.get('/get-product/:slug', isLogin, isAdmin, getOneProductController);
+router.get('/get-product/:slug', getOneProductController);
+router.get('/get-similar-products/:pid/:cid', getSimilarProductsController);
 router.get('/get-all-products', getAllProductsController);
 router.get('/product-photo/:id', getProductPhotoController);
 
 router.post('/product-filters/:page', productFilterController);
+router.get('/search/:keyword', searchProductsController);
+
 // router.get('/get-products-total', getTotalCountController);
 // router.get('/get-page-products/:page', getPageProductController);
 

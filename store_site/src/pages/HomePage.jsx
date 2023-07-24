@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
-import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import ProductCard from '../components/utils/ProductCard';
@@ -8,7 +7,6 @@ import { Checkbox, Radio } from 'antd';
 import { Price } from '../config/Price';
 
 const HomePage = () => {
-  const [auth, setAuth] = useAuth();
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -90,8 +88,8 @@ const HomePage = () => {
         `http://127.0.0.1:8080/api/product/product-filters/${page}`,
         { checked, radio }
       );
-      console.log(data.products);
-      console.log(data.total);
+      // console.log(data.products);
+      // console.log(data.total);
       setLoading(false);
       setTotalCount(data.total);
       setProducts([...products, ...data.products]);
@@ -160,7 +158,12 @@ const HomePage = () => {
           <h1 className="text-center m-0">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <ProductCard key={p._id} product={p} needBtn={true} />
+              <ProductCard
+                key={p._id}
+                product={p}
+                needBtn={true}
+                btnAdd={true}
+              />
             ))}
           </div>
           <div className="m-2 p-3">

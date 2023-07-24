@@ -1,6 +1,7 @@
 import { NavLink, Link } from 'react-router-dom';
 import { FaShoppingBag } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
+import SearchInput from '../Form/SearchInput';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -30,6 +31,7 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <SearchInput />
               <li className="nav-item">
                 <NavLink className="nav-link" to={'/'}>
                   Home

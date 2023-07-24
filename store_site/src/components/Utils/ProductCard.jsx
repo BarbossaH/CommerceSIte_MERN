@@ -1,4 +1,7 @@
-const ProductCard = ({ product, needBtn }) => {
+import { useNavigate } from 'react-router-dom';
+
+const ProductCard = ({ product, needBtn, btnAdd }) => {
+  const navigate = useNavigate();
   return (
     <div className="card m-2" style={{ width: '18rem' }}>
       <img
@@ -14,12 +17,20 @@ const ProductCard = ({ product, needBtn }) => {
             : product.description}
         </p>
         <p className="card-text">{`Price: $ ${product.price}`}</p>
-        {needBtn && (
-          <div className="d-flex justify-content-around m-0">
-            <button className="btn btn-primary ">More Details</button>
+
+        <div className="d-flex justify-content-around m-0">
+          {needBtn && (
+            <button
+              className="btn btn-primary "
+              onClick={() => navigate(`/product-details/${product.slug}`)}
+            >
+              More Details
+            </button>
+          )}
+          {btnAdd && (
             <button className="btn btn-secondary ">Add to Cart </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

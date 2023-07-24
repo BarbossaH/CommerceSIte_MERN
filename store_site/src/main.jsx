@@ -5,13 +5,16 @@ import 'antd/dist/reset.css';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
+import { SearchProvider } from './context/SearchContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
-    <Router>
-      {/* <React.StrictMode> */}
-      <App />
-      {/* </React.StrictMode> */}
-    </Router>
+    <SearchProvider>
+      <Router>
+        {/* <React.StrictMode> */}
+        <App />
+        {/* </React.StrictMode> */}
+      </Router>
+    </SearchProvider>
   </AuthProvider>
 );

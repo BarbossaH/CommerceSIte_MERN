@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const CategoryForm = ({ value, setValue, handleSubmit }) => {
   return (
     <div>

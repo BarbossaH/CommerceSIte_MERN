@@ -10,20 +10,20 @@ export const createProductController = async (req, res) => {
     //check the fields
     switch (true) {
       case !name:
-        return res.status(500).send({ error: 'Name is required.' });
+        return res.status(400).send({ error: 'Name is required.' });
       case !description:
-        return res.status(500).send({ error: 'Description is required.' });
+        return res.status(400).send({ error: 'Description is required.' });
       case !price:
-        return res.status(500).send({ error: 'Price is required.' });
+        return res.status(400).send({ error: 'Price is required.' });
       case !category:
-        return res.status(500).send({ error: 'Category is required.' });
+        return res.status(400).send({ error: 'Category is required.' });
       case !quantity:
-        return res.status(500).send({ error: 'Quantity is required.' });
+        return res.status(400).send({ error: 'Quantity is required.' });
       case !shipping:
-        return res.status(500).send({ error: 'Shipping is required.' });
+        return res.status(400).send({ error: 'Shipping is required.' });
       case !photo || photo?.size > 10000000:
         return res
-          .status(500)
+          .status(400)
           .send({ error: 'Phone is required and should be less than 1M.' });
     }
     // check duplicate
@@ -68,18 +68,18 @@ export const updateProductController = async (req, res) => {
     //check the fields
     switch (true) {
       case !name:
-        return res.status(500).send({ error: 'Name is required.' });
+        return res.status(400).send({ error: 'Name is required.' });
       case !description:
-        return res.status(500).send({ error: 'Description is required.' });
+        return res.status(400).send({ error: 'Description is required.' });
       case !price:
-        return res.status(500).send({ error: 'Price is required.' });
+        return res.status(400).send({ error: 'Price is required.' });
       case !category:
-        return res.status(500).send({ error: 'Category is required.' });
+        return res.status(400).send({ error: 'Category is required.' });
       case !quantity:
-        return res.status(500).send({ error: 'Quantity is required.' });
+        return res.status(400).send({ error: 'Quantity is required.' });
       case photo?.size > 1000000:
         return res
-          .status(500)
+          .status(400)
           .send({ error: 'Phone is required and should be less than 1M.' });
     }
     // check duplicate
@@ -198,6 +198,32 @@ export const getOneProductController = async (req, res) => {
   }
 };
 
+export const getSimilarProductsController = async (req, res) => {
+  try {
+    const { pid, cid } = req.params;
+    console.log(pid, cid);
+    const products = await productModel
+      .find({
+        category: cid,
+        _id: { $ne: pid },
+      })
+      .select('-photo')
+      .limit(3)
+      .populate('category');
+    return res.status(200).send({
+      success: true,
+      message: 'Getting similar product successfully',
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      message: 'Getting similar products went wrong.',
+      success: false,
+      error,
+    });
+  }
+};
 export const getProductPhotoController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -246,7 +272,7 @@ export const productFilterController = async (req, res) => {
 
     const total = await productModel.countDocuments(filters);
     // const total = (await productModel.find(filters)).length;
-    console.log(total, 99999999);
+    // console.log(total, 99999999);
     const products = await productModel
       .find(filters)
       .select('-photo')
@@ -271,6 +297,24 @@ export const productFilterController = async (req, res) => {
   }
 };
 
+export const searchProductsController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+
+    const results = await productModel
+      .find({
+        $or: [
+          { name: { $regex: keyword, $options: 'i' } },
+          { description: { $regex: keyword, $options: 'i' } },
+        ],
+      })
+      .select('-photo');
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    return res.status(500);
+  }
+};
 // export const getTotalCountController = async (req, res) => {
 //   try {
 //     const { checked, radio } = req.body;
