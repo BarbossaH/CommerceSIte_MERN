@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import ButtonAddToCart from './ButtonAddtoCart';
 
 const ProductCard = ({ product, needBtn, btnAdd }) => {
   const navigate = useNavigate();
@@ -27,9 +28,7 @@ const ProductCard = ({ product, needBtn, btnAdd }) => {
               More Details
             </button>
           )}
-          {btnAdd && (
-            <button className="btn btn-secondary ">Add to Cart </button>
-          )}
+          {btnAdd && <ButtonAddToCart />}
         </div>
       </div>
     </div>

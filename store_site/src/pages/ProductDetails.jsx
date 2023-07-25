@@ -3,6 +3,7 @@ import Layout from '../components/layout/Layout';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ProductCard from '../components/utils/ProductCard';
+import ButtonAddToCart from '../components/utils/ButtonAddtoCart';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -57,7 +58,7 @@ const ProductDetails = () => {
           <h6>Price : {product?.price}</h6>
           <h6>Category : {product?.category?.name}</h6>
           <h6>Shipping : {product?.shipping}</h6>
-          <button className="btn btn-secondary ">Add to Cart </button>
+          <ButtonAddToCart />
         </div>
       </div>
       <div className="row">
