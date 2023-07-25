@@ -5,6 +5,7 @@ import axios from 'axios';
 import ProductCard from '../components/utils/ProductCard';
 import { Checkbox, Radio } from 'antd';
 import { Price } from '../config/Price';
+import ButtonLoadMore from '../components/utils/ButtonLoadMore';
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -166,7 +167,14 @@ const HomePage = () => {
               />
             ))}
           </div>
-          <div className="m-2 p-3">
+          <ButtonLoadMore
+            products={products}
+            page={page}
+            loading={loading}
+            setPage={setPage}
+            totalCount={totalCount}
+          />
+          {/* <div className="m-2 p-3">
             {products && products.length < totalCount && (
               <button
                 className="btn btn-warning"
@@ -178,7 +186,7 @@ const HomePage = () => {
                 {loading ? 'Loading' : 'Load More'}
               </button>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </Layout>

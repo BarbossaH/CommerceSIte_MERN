@@ -20,11 +20,15 @@ import Products from './pages/admin/Products';
 import UpdateProduct from './pages/admin/UpdateProduct';
 import { SearchPage } from './pages/SearchPage';
 import ProductDetails from './pages/ProductDetails';
+import ProductsOfCategory from './pages/ProductsByCategory';
+import Categories from './pages/Categories';
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path="/categories" element={<Categories />} />
+      <Route path="/category/:slug" element={<ProductsOfCategory />} />
       <Route path="/product-details/:slug" element={<ProductDetails />} />
       <Route path="/dashboard" element={<PrivateAuth />}>
         <Route path="user" element={<Dashboard />} />

@@ -2,10 +2,13 @@ import { NavLink, Link } from 'react-router-dom';
 import { FaShoppingBag } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import SearchInput from '../Form/SearchInput';
+import useCategory from '../../../hooks/useCategory';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
   // console.log(auth);
+  const categories = useCategory();
+  // console.log(categories);
   const handleLogout = () => {
     localStorage.removeItem('auth');
     setAuth({ ...auth, user: null, token: null });
@@ -37,11 +40,34 @@ const Header = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link " to={'/category'}>
-                  Category
-                </NavLink>
+
+              <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Categories
+                </Link>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <Link className="dropdown-item" to={'/categories'}>
+                    All Categories
+                  </Link>
+                  {categories?.map((c) => (
+                    <li key={c.name}>
+                      <Link
+                        className="dropdown-item"
+                        to={`/category/${c.slug}`}
+                      >
+                        {c.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
+
               {!auth.user ? (
                 <>
                   <li className="nav-item">
@@ -65,12 +91,13 @@ const Header = () => {
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
+                      style={{ border: 'none' }}
                     >
                       {auth.user?.name}
                     </NavLink>
                     <ul
                       className="dropdown-menu"
-                      aria-labelledby="navbarDropdown"
+                      // aria-labelledby="navbarDropdown"
                     >
                       <li>
                         <Link
@@ -91,14 +118,9 @@ const Header = () => {
                           Logout
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <hr className="dropdown-divider" />
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Something else here
-                        </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </li>
                 </>

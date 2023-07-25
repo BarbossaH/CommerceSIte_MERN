@@ -11,6 +11,7 @@ import {
   productFilterController,
   searchProductsController,
   getSimilarProductsController,
+  getProductsBasedOnCategoryController,
 } from '../controller/productController.js';
 
 const router = express.Router();
@@ -38,6 +39,10 @@ router.get('/product-photo/:id', getProductPhotoController);
 router.post('/product-filters/:page', productFilterController);
 router.get('/search/:keyword', searchProductsController);
 
+router.get(
+  '/get-category-products/:slug',
+  getProductsBasedOnCategoryController
+);
 // router.get('/get-products-total', getTotalCountController);
 // router.get('/get-page-products/:page', getPageProductController);
 

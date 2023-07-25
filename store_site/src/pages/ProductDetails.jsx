@@ -61,7 +61,7 @@ const ProductDetails = () => {
         </div>
       </div>
       <div className="row">
-        <div className="mt-3" style={{ border: '1px green solid' }}></div>
+        <div className="mt-3" style={{ border: '0.5px green solid' }}></div>
         <h1 className="text-center">Similar Product</h1>
         <div className="d-flex flex-wrap">
           {similarPros.length < 1 ? (

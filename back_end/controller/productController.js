@@ -1,6 +1,7 @@
 import slugify from 'slugify';
 import productModel from '../models/productModel.js';
 import fs from 'fs';
+import categoryModel from '../models/categoryModel.js';
 export const createProductController = async (req, res) => {
   try {
     // const { name, description, price, category, quantity, shipping } =
@@ -297,6 +298,51 @@ export const productFilterController = async (req, res) => {
   }
 };
 
+export const getProductsBasedOnCategoryController = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    if (!slug)
+      return res.status(400).send({
+        message: 'Category is empty',
+        success: false,
+      });
+    const category = await categoryModel.findOne({ slug });
+    if (!category)
+      return res.status(401).send({
+        message: `${slug} doesn't exits`,
+        success: false,
+      });
+
+    // const eachCount = 1;
+    // const page = req.params.page ? req.params.page : 1;
+    const total = await productModel.countDocuments({ category });
+    const products = await productModel
+      .find({ category })
+      .select('-photo')
+      // .skip((page - 1) * eachCount)
+      .populate('category');
+    // .limit(eachCount);
+    if (products.length < 1) {
+      return res.status(200).send({
+        message: `There is not product of ${slug} `,
+        success: false,
+      });
+    } else {
+      return res.status(200).send({
+        message: `There is ${products.length} relative products.`,
+        products,
+        success: true,
+        total,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      error,
+    });
+  }
+};
 export const searchProductsController = async (req, res) => {
   try {
     const { keyword } = req.params;
@@ -312,9 +358,13 @@ export const searchProductsController = async (req, res) => {
     res.json(results);
   } catch (error) {
     console.log(error);
-    return res.status(500);
+    return res.status(500).send({
+      success: false,
+      error,
+    });
   }
 };
+
 // export const getTotalCountController = async (req, res) => {
 //   try {
 //     const { checked, radio } = req.body;
