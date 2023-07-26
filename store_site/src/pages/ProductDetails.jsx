@@ -3,7 +3,8 @@ import Layout from '../components/layout/Layout';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ProductCard from '../components/utils/ProductCard';
-import ButtonAddToCart from '../components/utils/ButtonAddtoCart';
+import ButtonAddToCart from '../components/utils/ButtonAddToCart';
+import ImageOfProduct from '../components/utils/ImageOfProduct';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -44,10 +45,16 @@ const ProductDetails = () => {
       <div className="row container mt-3">
         <div className="col-md-5">
           {product._id && (
-            <img
-              src={`http://127.0.0.1:8080/api/product/product-photo/${product._id}`}
-              className="card-img-top"
-              alt={product.name}
+            // <img
+            //   src={`http://127.0.0.1:8080/api/product/product-photo/${product._id}`}
+            //   className="card-img-top"
+            //   alt={product.name}
+            // />
+            <ImageOfProduct
+              productID={product._id}
+              productName={product.name}
+              width={'350px'}
+              height={'350px'}
             />
           )}
         </div>
@@ -58,7 +65,7 @@ const ProductDetails = () => {
           <h6>Price : {product?.price}</h6>
           <h6>Category : {product?.category?.name}</h6>
           <h6>Shipping : {product?.shipping}</h6>
-          <ButtonAddToCart />
+          <ButtonAddToCart product={product} />
         </div>
       </div>
       <div className="row">

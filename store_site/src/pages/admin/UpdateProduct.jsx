@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
+import ImageOfProduct from '../../components/utils/ImageOfProduct';
 const { Option } = Select;
 
 const UpdateProduct = () => {
@@ -49,7 +50,7 @@ const UpdateProduct = () => {
       );
       if (data.success) {
         setName(data.product.name);
-        console.log(data.product, 90909090);
+        // console.log(data.product, 90909090);
         setCategoryID(data.product.category._id);
         setProductID(data.product._id);
         setPrice(data.product.price);
@@ -163,12 +164,18 @@ const UpdateProduct = () => {
                 ) : productID ? (
                   <div className="text-center">
                     {/* {console.log(productID, 9090909091)} */}
-                    <img
+                    <ImageOfProduct
+                      productID={productID}
+                      productName={name}
+                      height={'200px'}
+                      width={'200px'}
+                    />
+                    {/* <img
                       src={`http://127.0.0.1:8080/api/product/product-photo/${productID}`}
                       className="img img-responsive"
                       height={'200px'}
                       alt={name}
-                    />
+                    /> */}
                   </div>
                 ) : (
                   <></>

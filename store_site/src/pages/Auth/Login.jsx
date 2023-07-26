@@ -57,7 +57,7 @@ const Login = () => {
               placeholder="Enter your email"
               required
             />
-          </div>{' '}
+          </div>
           <div className="col-md-12">
             <label htmlFor="inputPassword4" className="form-label">
               Password

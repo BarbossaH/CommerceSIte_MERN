@@ -22,11 +22,13 @@ import { SearchPage } from './pages/SearchPage';
 import ProductDetails from './pages/ProductDetails';
 import ProductsOfCategory from './pages/ProductsByCategory';
 import Categories from './pages/Categories';
+import CartPage from './pages/CartPage';
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path="/cart" element={<CartPage />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/category/:slug" element={<ProductsOfCategory />} />
       <Route path="/product-details/:slug" element={<ProductDetails />} />

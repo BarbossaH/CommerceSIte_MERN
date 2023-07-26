@@ -6,15 +6,18 @@ import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { SearchProvider } from './context/SearchContext.jsx';
+import { CartProvider } from './context/CartContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
     <SearchProvider>
-      <Router>
-        {/* <React.StrictMode> */}
-        <App />
-        {/* </React.StrictMode> */}
-      </Router>
+      <CartProvider>
+        <Router>
+          {/* <React.StrictMode> */}
+          <App />
+          {/* </React.StrictMode> */}
+        </Router>
+      </CartProvider>
     </SearchProvider>
   </AuthProvider>
 );

@@ -3,9 +3,11 @@ import { FaShoppingBag } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import SearchInput from '../Form/SearchInput';
 import useCategory from '../../../hooks/useCategory';
-
+import { useCart } from '../../context/CartContext';
+import { Badge } from 'antd';
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
   // console.log(auth);
   const categories = useCategory();
   // console.log(categories);
@@ -125,10 +127,12 @@ const Header = () => {
                   </li>
                 </>
               )}
-              <li className="nav-item">
-                <NavLink to={'/cart'} className="nav-link">
-                  Cart(0)
-                </NavLink>
+              <li className="nav-item" style={{ paddingTop: '5px' }}>
+                <Badge count={cart?.length} showZero>
+                  <NavLink to={'/cart'} className="nav-link">
+                    Cart
+                  </NavLink>
+                </Badge>
               </li>
             </ul>
           </div>

@@ -1,15 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import ButtonAddToCart from './ButtonAddtoCart';
+import ButtonAddToCart from './ButtonAddToCart';
+import ImageOfProduct from './ImageOfProduct';
+import React from 'react';
 
 const ProductCard = ({ product, needBtn, btnAdd }) => {
   const navigate = useNavigate();
   return (
     <div className="card m-2" style={{ width: '18rem' }}>
-      <img
+      {/* <img
         src={`http://127.0.0.1:8080/api/product/product-photo/${product._id}`}
         className="card-img-top"
         alt={product.name}
-      />
+      /> */}
+      <ImageOfProduct productID={product?._id} productName={product?.name} />
       <div className="card-body">
         <h5 className="card-title">{`Product: ${product.name}`}</h5>
         <p className="card-text">
@@ -28,10 +31,11 @@ const ProductCard = ({ product, needBtn, btnAdd }) => {
               More Details
             </button>
           )}
-          {btnAdd && <ButtonAddToCart />}
+
+          {btnAdd && <ButtonAddToCart product={product} />}
         </div>
       </div>
     </div>
   );
 };
-export default ProductCard;
+export default React.memo(ProductCard);
