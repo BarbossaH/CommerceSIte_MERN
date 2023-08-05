@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const AdminDashboard = () => {
   const [auth] = useAuth();
+  console.log(auth);
   return (
     <Layout title={'Admin-Dashboard'}>
       <div className="container-fluid m-3 p-3">

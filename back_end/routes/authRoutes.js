@@ -3,7 +3,8 @@ import {
   registerController,
   loginController,
   forgetPwdController,
-  testCon,
+  updateProfileController,
+  // testCon,
 } from '../controller/authController.js';
 
 import { isLogin, isAdmin } from '../middleware/authMiddleware.js';
@@ -18,7 +19,9 @@ router.post('/login', loginController);
 //forget password
 router.post('/forget-password', forgetPwdController);
 
-router.get('/test', isLogin, isAdmin, testCon);
+//update profile
+router.put('/update-profile', isLogin, updateProfileController);
+// router.get('/test', isLogin, isAdmin, testCon);
 
 // is user login
 router.get('/user-auth', isLogin, (req, res) => {

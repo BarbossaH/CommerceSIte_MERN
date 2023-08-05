@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import ImageOfProduct from '../components/utils/ImageOfProduct';
 import { useAuth } from '../context/AuthContext';
@@ -5,9 +6,20 @@ import { useCart } from '../context/CartContext';
 
 const CartPage = () => {
   //all products in cart should be read in local storage first.
-
+  const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
+
+  const totalPrice = () => {
+    let total = 0;
+    cart?.map((item) => {
+      total = total + item.price * item.quantity;
+    });
+    return total.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+  };
 
   const handleRemoveItem = (pid) => {
     try {
@@ -40,7 +52,7 @@ const CartPage = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-6">
             {cart &&
               cart?.map((p) => (
                 <div className="row mb-2 card flex-row" key={p._id}>
@@ -63,7 +75,33 @@ const CartPage = () => {
                 </div>
               ))}
           </div>
-          <div className="col-md-4">Checkout | Payment</div>
+          <div className="col-md-4 text-center">
+            <h4>Cart Summary</h4>
+            <p>Total | Checkout | Payment</p>
+            <hr />
+            <h4>Total: {totalPrice()}</h4>
+            {auth?.user?.address ? (
+              <div className="mb-3">
+                <h4>Current Address</h4>
+                <h5>{auth?.user?.address}</h5>
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => navigate('/dashboard/user/profile')}
+                >
+                  Update Address
+                </button>
+              </div>
+            ) : (
+              <div className="mb-3">
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => navigate('/login')}
+                >
+                  Login
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Layout>

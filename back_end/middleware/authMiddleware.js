@@ -2,7 +2,7 @@ import JWT from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
 
 export const isLogin = async (req, res, next) => {
-  console.log('is Login', req.headers.authorization);
+  // console.log('is Login', req.headers.authorization);
 
   try {
     const decode = JWT.verify(req.headers.authorization, process.env.JWT_TOKEN);
@@ -14,7 +14,7 @@ export const isLogin = async (req, res, next) => {
 };
 
 export const isAdmin = async (req, res, next) => {
-  console.log('is Admin');
+  // console.log('is Admin');
   try {
     const user = await userModel.findById(req.user._id);
     if (user?.role !== 1) {

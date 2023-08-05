@@ -134,6 +134,60 @@ export const forgetPwdController = async (req, res) => {
     });
   }
 };
+
+export const updateProfileController = async (req, res) => {
+  // console.log(req.user, 99999999);
+  //req.user was assigned in isLogin function in authMiddleware, parsed by token
+  if (!req.user) {
+    return res.status(400).send({
+      success: false,
+      message: 'User not authenticated. Please login.',
+    });
+  }
+  const userId = req.user._id;
+  try {
+    const { name, email, password, address, phone } = req.body;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: 'User not found.',
+      });
+    }
+    let hashedPwd = user.password;
+    if (password) {
+      if (password.length < 6) {
+        return res
+          .status(400)
+          .json({ error: 'Password requires at least 6 characters.' });
+      }
+      hashedPwd = await handleHashPwd(password);
+    }
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      {
+        name: name || user.name,
+        password: hashedPwd,
+        phone: phone || user.phone,
+        address: address || user.address,
+      },
+      { new: true }
+    );
+    return res.status(200).send({
+      success: true,
+      message: 'Profile updated successfully',
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: 'Error when updating profile',
+      error,
+    });
+  }
+};
+
 export const testCon = async (req, res) => {
   res.send('Test');
 };
