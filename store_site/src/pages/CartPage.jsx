@@ -3,12 +3,33 @@ import Layout from '../components/layout/Layout';
 import ImageOfProduct from '../components/utils/ImageOfProduct';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import DropIn from 'braintree-web-drop-in-react';
 
 const CartPage = () => {
   //all products in cart should be read in local storage first.
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
+  const [paymentToken, setPaymentToken] = useState('');
+  const [payInstance, setPayInstance] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const getPaymentToken = async () => {
+    try {
+      const { data } = await axios.get(
+        'http://127.0.0.1:8080/api/product//braintree/token'
+      );
+      // console.log(data);
+      setPaymentToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getPaymentToken();
+  }, [auth?.token]);
 
   const totalPrice = () => {
     let total = 0;
@@ -32,6 +53,27 @@ const CartPage = () => {
       localStorage.setItem('cart', JSON.stringify(newCart));
     } catch (error) {
       console.log(error);
+    }
+  };
+  const handlePay = async () => {
+    try {
+      setIsLoading(true);
+      const { nonce } = await payInstance.requestPaymentMethod();
+      // console.log(nonce);
+      const { data } = await axios.post(
+        'http://127.0.0.1:8080/api/product//braintree/payment',
+        { nonce, cart }
+      );
+      // console.log(data);
+
+      setIsLoading(false);
+      localStorage.removeItem('cart');
+      setCart([]);
+      navigate('/dashboard/user/orders');
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
     }
   };
   return (
@@ -97,10 +139,33 @@ const CartPage = () => {
                   className="btn btn-outline-warning"
                   onClick={() => navigate('/login')}
                 >
-                  Login
+                  Login to Checkout
                 </button>
               </div>
             )}
+            <div className="mt-2">
+              {!paymentToken || !cart?.length ? (
+                ''
+              ) : (
+                <>
+                  <DropIn
+                    options={{
+                      authorization: paymentToken,
+                      paypal: { flow: 'vault' },
+                    }}
+                    onInstance={(instance) => setPayInstance(instance)}
+                  />
+                  <button
+                    className="btn btn-primary"
+                    onClick={handlePay}
+                    disabled={isLoading || !payInstance || !auth?.user?.address}
+                  >
+                    {console.log(isLoading, payInstance, auth?.user?.address)}
+                    {isLoading ? 'Processing ...' : 'Make Payment'}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

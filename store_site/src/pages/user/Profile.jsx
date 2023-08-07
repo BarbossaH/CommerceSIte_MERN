@@ -15,7 +15,7 @@ const Profile = () => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
 
-  console.log(auth);
+  // console.log(auth);
   useEffect(() => {
     const {
       user: { email, address, name, phone },
